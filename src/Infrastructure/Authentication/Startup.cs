@@ -33,7 +33,6 @@ namespace MyWarehouse.Infrastructure.Authentication
         public static void Configure(IApplicationBuilder app)
         {
             app.UseAuthentication();
-            app.UseAuthorization();
         }
 
         /// <summary>

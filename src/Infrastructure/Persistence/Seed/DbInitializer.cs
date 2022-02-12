@@ -61,7 +61,16 @@ namespace MyWarehouse.Infrastructure.Persistence.Seed
                 if (!userManager.Users.Any(u => u.UserName == settings.DefaultUsername))
                 {
                     var defaultUser = new ApplicationUser { UserName = settings.DefaultUsername, Email = settings.DefaultEmail };
-                    userManager.CreateAsync(defaultUser, settings.DefaultPassword).GetAwaiter().GetResult();
+                    var user = userManager.CreateAsync(defaultUser, settings.DefaultPassword).GetAwaiter().GetResult();
+                    if (user.Succeeded)
+                    {
+                        var claim = new System.Security.Claims.Claim(Authorization.Constants.KnownClaims.AdministartorClaim.Name, Authorization.Constants.KnownClaims.AdministartorClaim.Values.Administrator);
+                        var result = userManager.AddClaimAsync(defaultUser,claim).GetAwaiter().GetResult();
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception("Failed to add claim for seeded user!");
+                        }
+                    }
                 }
             }
         }

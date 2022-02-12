@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MyWarehouse.Infrastructure.Authentication.Core.Model;
 using MyWarehouse.Infrastructure.Identity.Model;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyWarehouse.Infrastructure.Authentication.Core.Services
@@ -40,7 +41,8 @@ namespace MyWarehouse.Infrastructure.Authentication.Core.Services
                 throw new System.Exception("Unhandled sign-in outcome.");
             }
 
-            var token = _tokenService.CreateAuthenticationToken(user.Id, username);
+            var customClaims = await _userManager.GetClaimsAsync(user);
+            var token = _tokenService.CreateAuthenticationToken(user.Id, username, customClaims.Select(i => (i.Type, i.Value)));
 
             return (
                 MySignInResult.Success,

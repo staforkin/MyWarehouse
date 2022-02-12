@@ -27,6 +27,7 @@ namespace MyWarehouse.Infrastructure
         {
             Identity.Startup.ConfigureServices(services, configuration);
             Authentication.Startup.ConfigureServices(services, configuration);
+            Authorization.Startup.ConfigureServices(services, configuration);
             Persistence.Startup.ConfigureServices(services, configuration, env);
             ApplicationDependencies.Startup.ConfigureServices(services, configuration);
         }
@@ -34,6 +35,7 @@ namespace MyWarehouse.Infrastructure
         public static void UseMyInfrastructure(this IApplicationBuilder app, IConfiguration configuration, IWebHostEnvironment env)
         {
             Authentication.Startup.Configure(app);
+            Authorization.Startup.Configure(app);
             Persistence.Startup.Configure(app, configuration);
         }
     }

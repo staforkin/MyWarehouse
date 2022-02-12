@@ -11,10 +11,7 @@
     <EmbeddedResource Remove="Exceptions\**" />
     <None Remove="Exceptions\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Authorization\Policies\" />
-  </ItemGroup>
+   
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
